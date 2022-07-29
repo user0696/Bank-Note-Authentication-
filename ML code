@@ -1,0 +1,30 @@
+import numpy as np 
+import pandas as pd
+df=pd.read_csv("BankNote_Authentication.csv")
+df.head()
+
+X=df.iloc[:,:-1]
+Y=df.iloc[:,-1]
+
+X.head()
+
+Y.tail()
+
+from sklearn.model_selection import train_test_split
+
+X_train,X_test,Y_train,Y_test=train_test_split(X,Y,test_size=0.3,random_state=0)
+
+from sklearn.ensemble import RandomForestClassifier
+Classifier=RandomForestClassifier()
+Classifier.fit(X_train,Y_train)
+Y_pred=Classifier.predict(X_test)
+
+from sklearn.metrics import accuracy_score
+ score=accuracy_score(Y_test,Y_pred)
+
+import pickle
+pickle_out = open("classifier.pkl","wb")
+pickle.dump(classifier, pickle_out)
+pickle_out.close()
+
+
